@@ -3,7 +3,11 @@ package com.example.demo.modelservice;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 
 import com.example.demo.modelproject.ModelSeat;
 import com.example.demo.modelrepository.ModelRepository;
@@ -47,4 +51,27 @@ public class ModelService {
 	public List<ModelSeat> getDetails(){
 		return mr.findAll();
 	}
+	//Sorting
+			public List<ModelSeat> sortinginfo(String s){
+				return mr.findAll(Sort.by(Sort.DEFAULT_DIRECTION,s));
+			}
+		//pagination
+			public List<ModelSeat> getbypage(int pagno,int pgsize){
+				Page<ModelSeat> p=mr.findAll(PageRequest.of(pagno, pgsize));
+				return p.getContent();
+			}
+			//select jpql
+			public List<ModelSeat>getinfos(int s){
+				return mr.getstudentinfor(s);
+			}
+			//delete jpql
+		     public int DeleteByQuery(int bookingid){
+		    	 return mr.deleteBookById(bookingid);
+		     }
+		     //update jpql
+		     public int UpdateByQuery(int newid,int oldid) {
+		    	 return mr.updateBookById(newid,oldid);
+		     }
+			
+			
 }
